@@ -59,21 +59,17 @@ h2 {
 }
 
 h3 {
-  font-size: 20px;
-  color: #ffffff;
-}
-
-h4 {
-  font-size: 15px;
+  font-size: 50px;
   color: #1db954;
-  font-family: "Gotham Pro";
+  font-family: "Gotham Pro Light";
 }
 
 h5 {
-  font-size: 13px;
+  font-size: 30px;
   color: #ffffff;
-  width: 97%;
+  text-align: left;
   font-family: "Gotham Pro Light";
+  margin-left: 25%;
 }
 
 input {
@@ -89,9 +85,10 @@ input {
   -moz-border-radius: 3px;
   width: 50%;
   height: 100px;
-  padding: 7px;
+  margin-bottom: 1%;
   font-family: "Gotham Pro Light";
   font-size: 50px;
+  text-align: center;
   outline: none;
 }
 

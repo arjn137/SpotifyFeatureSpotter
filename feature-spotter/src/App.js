@@ -91,7 +91,7 @@ class App extends Component {
               }
             })
           });
-        }, 100);
+        }, 500);
       });
   }
 
@@ -150,7 +150,7 @@ class App extends Component {
             resolve(results);
           });
         });
-      }, 200);
+      }, 500);
     });
   }
 

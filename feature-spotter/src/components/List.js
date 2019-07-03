@@ -15,9 +15,7 @@ class List extends Component {
 
     return (
       <div className="list">
-        <h4>
-          {this.props.artist} is featured on {setSongs.length} songs
-        </h4>
+        <h3>{setSongs.length} tracks</h3>
         <ul>
           {setSongs.map(song => {
             let artists = song.artists.map(item => {
