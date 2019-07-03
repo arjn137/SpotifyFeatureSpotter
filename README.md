@@ -5,4 +5,5 @@ Using the Spotify API, this application is able to locate every song an artist h
 ## Infrastructure
 
 Frontend: REACT.js and Node.js
+
 Backend: Express.js
