@@ -91,7 +91,7 @@ class App extends Component {
               }
             })
           });
-        }, 500);
+        }, 800);
       });
   }
 
@@ -133,7 +133,7 @@ class App extends Component {
         Promise.all(
           totalCovers.map(album => {
             return fetch(
-              `https://api.spotify.com/v1/albums/${album.id}/tracks`,
+              `https://api.spotify.com/v1/albums/${album.id}/tracks?limit=50`,
               {
                 headers: {
                   Authorization: "Bearer " + accessToken
@@ -147,6 +147,7 @@ class App extends Component {
               return res.json();
             })
           ).then(results => {
+            console.log(results);
             resolve(results);
           });
         });
@@ -166,8 +167,8 @@ class App extends Component {
       <div className="App">
         <img
           src={require("./assets/Spotify_Icon_RGB_Green.png")}
-          height="75"
-          width="75"
+          height="150"
+          width="150"
         />
         <h1>Feature Spotter</h1>
         {this.state.serverData.user ? (
