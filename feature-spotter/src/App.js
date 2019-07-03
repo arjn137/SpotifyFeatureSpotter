@@ -72,26 +72,24 @@ class App extends Component {
       })
       .then(arrayOfAlbums => {
         let songs = [];
-        setTimeout(() => {
-          arrayOfAlbums.forEach(album => {
-            album.items.forEach(song => {
-              song.artists.forEach(artist => {
-                if (artist.name === artistName && song.artists.length > 1) {
-                  songs.push(song);
-                }
-              });
+        arrayOfAlbums.forEach(album => {
+          album.items.forEach(song => {
+            song.artists.forEach(artist => {
+              if (artist.name === artistName && song.artists.length > 1) {
+                songs.push(song);
+              }
             });
           });
-          this.setState({
-            filterString: query,
-            serverData: Object.assign({}, this.state.serverData, {
-              artist: {
-                name: artistName,
-                featuredSongs: songs
-              }
-            })
-          });
-        }, 800);
+        });
+        this.setState({
+          filterString: query,
+          serverData: Object.assign({}, this.state.serverData, {
+            artist: {
+              name: artistName,
+              featuredSongs: songs
+            }
+          })
+        });
       });
   }
 
@@ -110,11 +108,11 @@ class App extends Component {
   }
 
   getAppearsOn(artistID, accessToken, artistName, query) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       let totalCovers = [];
       const numOfResults = 8;
       for (var i = 0; i < numOfResults; i++) {
-        fetch(
+        await fetch(
           `https://api.spotify.com/v1/artists/${artistID}/albums?include_groups=appears_on&limit=50&offset=${i *
             50}`,
           {
@@ -128,30 +126,27 @@ class App extends Component {
             });
           });
       }
-      setTimeout(() => {
-        // create array with all albums artist appears on (songs and name)
-        Promise.all(
-          totalCovers.map(album => {
-            return fetch(
-              `https://api.spotify.com/v1/albums/${album.id}/tracks?limit=50`,
-              {
-                headers: {
-                  Authorization: "Bearer " + accessToken
-                }
+      // create array with all albums artist appears on (songs and name)
+      await Promise.all(
+        totalCovers.map(album => {
+          return fetch(
+            `https://api.spotify.com/v1/albums/${album.id}/tracks?limit=50`,
+            {
+              headers: {
+                Authorization: "Bearer " + accessToken
               }
-            );
+            }
+          );
+        })
+      ).then(responses => {
+        Promise.all(
+          responses.map(res => {
+            return res.json();
           })
-        ).then(responses => {
-          Promise.all(
-            responses.map(res => {
-              return res.json();
-            })
-          ).then(results => {
-            console.log(results);
-            resolve(results);
-          });
+        ).then(results => {
+          resolve(results);
         });
-      }, 500);
+      });
     });
   }
 
