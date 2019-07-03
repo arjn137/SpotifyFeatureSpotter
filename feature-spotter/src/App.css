@@ -8,7 +8,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #191414;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -31,7 +31,70 @@
   }
 }
 
+@font-face {
+  font-family: "Gotham Pro Light";
+  src: url(./assets/fonts/GothamPro-Light.ttf);
+}
+
+@font-face {
+  font-family: "Gotham Pro";
+  src: url(./assets/fonts/GothamPro-Medium.ttf);
+}
+
+@font-face {
+  font-family: "Gotham Pro Bold";
+  src: url(./assets/fonts/GothamPro-Bold.ttf);
+}
+
 h1 {
   font-size: 50px;
-  color: #000000;
+  color: #1db954;
+  font-family: "Gotham Pro Bold";
+}
+
+h2 {
+  font-size: 25px;
+  color: #ffffff;
+  font-family: "Gotham Pro Bold";
+}
+
+h3 {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+h4 {
+  font-size: 15px;
+  color: #1db954;
+  font-family: "Gotham Pro";
+}
+
+h5 {
+  font-size: 13px;
+  color: #ffffff;
+  width: 97%;
+  font-family: "Gotham Pro Light";
+}
+
+input {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border: 1px solid #ffffff;
+  box-shadow: 1px 1px 4px #ffffff;
+  -moz-box-shadow: 1px 1px 4px #ffffff;
+  -webkit-box-shadow: 1px 1px 4px #ffffff;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  width: 50%;
+  height: 100px;
+  padding: 7px;
+  font-family: "Gotham Pro Light";
+  font-size: 50px;
+  outline: none;
+}
+
+img {
+  margin-top: 5%;
 }
