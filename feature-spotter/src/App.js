@@ -110,7 +110,7 @@ class App extends Component {
   getAppearsOn(artistID, accessToken, artistName, query) {
     return new Promise(async (resolve, reject) => {
       let totalCovers = [];
-      const numOfResults = 8;
+      const numOfResults = 16;
       for (var i = 0; i < numOfResults; i++) {
         await fetch(
           `https://api.spotify.com/v1/artists/${artistID}/albums?include_groups=appears_on&limit=50&offset=${i *
@@ -165,7 +165,7 @@ class App extends Component {
           height="150"
           width="150"
         />
-        <h1>Feature Spotter</h1>
+        <h1 id="title-header">Feature Spotter</h1>
         {this.state.serverData.user ? (
           <div>
             {/*<div>

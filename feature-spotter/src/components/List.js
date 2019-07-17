@@ -1,29 +1,86 @@
 import React, { Component } from "react";
+import sim from "string-similarity";
 
 // List of songs with artist "featured"
 class List extends Component {
-  // NEED TO DELAY everything after album.songs because it's not loading
+  playPreview = e => {
+    var audio = e.target.previousSibling;
+    var image = e.target;
+    if (audio) {
+      if (audio.paused) {
+        audio.play();
+        image.src = require("../assets/revplaybutton.png");
+      } else {
+        audio.pause();
+        image.src = require("../assets/playbutton.png");
+      }
+    }
+  };
+
   render() {
     let setSongs = [];
     let songValues = [];
     this.props.appearsArray.forEach(song => {
-      if (!songValues.includes(song.name)) {
-        songValues.push(song.name);
+      var doesExist = false;
+      for (var i = 0; i < songValues.length; i++)
+        if (
+          sim.compareTwoStrings(
+            song.name.replace(/[-|\(].*/, ""),
+            songValues[i]
+          ) > 0.8
+        )
+          doesExist = true;
+
+      if (!doesExist) {
+        songValues.push(song.name.replace(/[-|\(].*/, ""));
         setSongs.push(song);
       }
     });
 
     return (
       <div className="list">
-        <h3>{setSongs.length} tracks</h3>
+        <h3 id="num-of-tracks">{setSongs.length} tracks</h3>
         <ul>
           {setSongs.map(song => {
             let artists = song.artists.map(item => {
               return item.name;
             });
+            console.log(song);
             return (
               <li>
-                <h5>{song.name + " - " + artists.join(", ")}</h5>
+                <div className="song-player">
+                  {/**
+                     * <iframe
+                    src={song.external_urls.spotify}
+                    width="300"
+                    height="80"
+                    frameBorder="0"
+                    allowtransparency="true"
+                    allow="encrypted-media"
+                  />
+                     */}
+                  <button id="play-button">
+                    <audio>
+                      <source src={song.preview_url} type="audio/mpeg" />
+                    </audio>
+                    <img
+                      id="play-image"
+                      src={require("../assets/playbutton.png")}
+                      onClick={this.playPreview}
+                      style={{ verticalAlign: "middle" }}
+                      width="30"
+                      height="30"
+                    />
+                  </button>
+                  <a
+                    id="song-name"
+                    href={song.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {song.name + " - " + artists.join(", ")}
+                  </a>
+                </div>
               </li>
             );
           })}

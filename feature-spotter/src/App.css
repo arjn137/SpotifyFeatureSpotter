@@ -22,6 +22,16 @@
   color: #61dafb;
 }
 
+.song-player {
+  margin: 0;
+  width: 70%;
+  font-size: 30px;
+  color: #ffffff;
+  text-align: left;
+  font-family: "Gotham Pro Light";
+  margin-left: 20%;
+  padding: 0.5em;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -46,22 +56,32 @@
   src: url(./assets/fonts/GothamPro-Bold.ttf);
 }
 
-h1 {
+#title-header {
   font-size: 80px;
   color: #1db954;
   font-family: "Gotham Pro";
+}
+
+#song-name {
+  color: #fff;
+  text-decoration-line: none;
+}
+
+#num-of-tracks {
+  font-size: 50px;
+  color: #1db954;
+  font-family: "Gotham Pro Light";
+}
+
+#play-button {
+  background: #191414;
+  border: 0;
 }
 
 h2 {
   font-size: 25px;
   color: #ffffff;
   font-family: "Gotham Pro Bold";
-}
-
-h3 {
-  font-size: 50px;
-  color: #1db954;
-  font-family: "Gotham Pro Light";
 }
 
 h5 {
