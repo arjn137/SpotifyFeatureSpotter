@@ -43,14 +43,14 @@ class App extends Component {
     });
   }
 
-  performSearch(query, accessToken) {
+  async performSearch(query, accessToken) {
     let artistName = "";
     let artistID = "";
     // var p = new Promise((resolve, reject) => {
     var adjustedArtistName = query.replace(" ", "%20");
     // console.log(adjustedArtistName);
     // Get Artist from Search
-    fetch(
+    await fetch(
       `https://api.spotify.com/v1/search?q=${adjustedArtistName}&type=artist&limit=50`,
       {
         headers: {
@@ -60,37 +60,36 @@ class App extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        return data.artists.items[0].id;
-      })
-      .then(ID => {
-        artistID = ID;
-        return this.getArtistInfo(artistID, accessToken);
-      })
-      .then(name => {
-        artistName = name;
-        return this.getAppearsOn(artistID, accessToken, artistName, query);
-      })
-      .then(arrayOfAlbums => {
-        let songs = [];
-        arrayOfAlbums.forEach(album => {
-          album.items.forEach(song => {
-            song.artists.forEach(artist => {
-              if (artist.name === artistName && song.artists.length > 1) {
-                songs.push(song);
-              }
-            });
+        artistID = data.artists.items[0].id;
+      });
+    artistName = await this.getArtistInfo(artistID, accessToken);
+    let arrayOfAlbums = await this.getAppearsOn(
+      artistID,
+      accessToken,
+      artistName,
+      query
+    );
+    let songs = [];
+    arrayOfAlbums.forEach(album => {
+      if (album.items) {
+        album.items.forEach(song => {
+          song.artists.forEach(artist => {
+            if (artist.name === artistName && song.artists.length > 1) {
+              songs.push(song);
+            }
           });
         });
-        this.setState({
-          filterString: query,
-          serverData: Object.assign({}, this.state.serverData, {
-            artist: {
-              name: artistName,
-              featuredSongs: songs
-            }
-          })
-        });
-      });
+      }
+    });
+    this.setState({
+      filterString: query,
+      serverData: Object.assign({}, this.state.serverData, {
+        artist: {
+          name: artistName,
+          featuredSongs: songs
+        }
+      })
+    });
   }
 
   getArtistInfo(artistID, accessToken) {

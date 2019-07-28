@@ -6,6 +6,7 @@ class List extends Component {
   playPreview = e => {
     var audio = e.target.previousSibling;
     var image = e.target;
+
     if (audio) {
       if (audio.paused) {
         audio.play();
@@ -25,14 +26,14 @@ class List extends Component {
       for (var i = 0; i < songValues.length; i++)
         if (
           sim.compareTwoStrings(
-            song.name.replace(/[-|\(].*/, ""),
+            song.name.replace(/[-|(].*/, ""),
             songValues[i]
-          ) > 0.8
+          ) > 0.9
         )
           doesExist = true;
 
       if (!doesExist) {
-        songValues.push(song.name.replace(/[-|\(].*/, ""));
+        songValues.push(song.name.replace(/[-|(].*/, ""));
         setSongs.push(song);
       }
     });
@@ -45,24 +46,15 @@ class List extends Component {
             let artists = song.artists.map(item => {
               return item.name;
             });
-            console.log(song);
+
             return (
               <li>
                 <div className="song-player">
-                  {/**
-                     * <iframe
-                    src={song.external_urls.spotify}
-                    width="300"
-                    height="80"
-                    frameBorder="0"
-                    allowtransparency="true"
-                    allow="encrypted-media"
-                  />
-                     */}
                   <button id="play-button">
                     <audio>
                       <source src={song.preview_url} type="audio/mpeg" />
                     </audio>
+
                     <img
                       id="play-image"
                       src={require("../assets/playbutton.png")}
@@ -72,6 +64,7 @@ class List extends Component {
                       height="30"
                     />
                   </button>
+
                   <a
                     id="song-name"
                     href={song.external_urls.spotify}
